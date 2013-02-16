@@ -32,6 +32,7 @@
   },
   "dependencies": {
 	  "grunt" : "0.3.x",
-	  "grunt-contrib-less" : "0.3.2"
+	  "grunt-contrib-less" : "0.3.2",
+	  "underscore" : "1.4.4"
   }
 }
