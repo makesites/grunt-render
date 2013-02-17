@@ -1,5 +1,7 @@
 
 module.exports = function (grunt) {
+	var fs = require("fs");
+	var _ = require("underscore");
 	
 	grunt.registerMultiTask('js', "Minify js files", function () {
 		var dir = this.data.dir + this.data.dest;
@@ -18,22 +20,35 @@ module.exports = function (grunt) {
 			// exit now if empty array
 			if( !scripts.length ) continue;
 			
+			
+			// execute this once or with a delay... (set: options.minify.recurring : 3600)
+			if( this.data.recurring ){ 
+				// check if there's an existing file
+				var now = (new Date()).getTime()
+				timestamp = ( fs.existsSync(lib) ) ? fs.statSync(lib).mtime.getTime() : false;
+				// stop now if it's too early
+				if( timestamp && now - timestamp < this.data.recurring ) continue;
+				
+			} else {
+				// if the file exists - the task has already been done...
+				if( fs.existsSync(lib) ) continue;
+			}
+			
+			// in all other cases add the task
 			config.uglify[group] = {
 				src: scripts,
 				dest: lib
-			  };
-  			
-			/*
-		
-  */
+			};
+					
 		}
 		
+		if( !_.isEmpty( config.uglify ) ){ 
 			grunt.initConfig( config );
 			
 			grunt.tasks("uglify", config, function(){
 				console.log("DONE!!!");
 			});
-			
+		}
 		//var relativeTo = this.data.cdn;
 		//var files = grunt.file.expandFiles(this.file.src);
 		//var dest = this.file.dest;
