@@ -1,6 +1,6 @@
 {
   "name": "grunt-render",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "[WIP] Grunt tasks initiated on the server side while rendering views",
   "author": "makesites",
   "contributors": [
@@ -31,8 +31,8 @@
   	"node": "~0.8.x"
   },
   "dependencies": {
-	  "grunt" : "0.3.x",
-	  "grunt-contrib-less" : "0.3.2",
+	  "grunt": "0.4.x",
+	  "grunt-contrib-less": "0.3.x", 
 	  "underscore" : "1.4.4"
   }
 }
