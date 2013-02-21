@@ -1,7 +1,7 @@
 {
   "name": "grunt-render",
-  "version": "0.0.3",
-  "description": "[WIP] Grunt tasks initiated on the server side while rendering views",
+  "version": "0.0.4",
+  "description": "Grunt tasks initiated on the server side while rendering views",
   "author": "makesites",
   "contributors": [
     {
