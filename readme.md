@@ -26,6 +26,7 @@ npm install grunt-render
 
 * minify : a boolean if the assets will be minified in production
 
+* main
 
 
 ## Methods
