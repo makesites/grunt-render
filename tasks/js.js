@@ -1,7 +1,7 @@
-
+var fs = require("fs"), 
+	_ = require("underscore");
+	
 module.exports = function (grunt) {
-	var fs = require("fs");
-	var _ = require("underscore");
 	
 	grunt.registerMultiTask('js', "Minify js files", function () {
 		var dir = this.data.dir + this.data.dest;
@@ -46,7 +46,7 @@ module.exports = function (grunt) {
 			grunt.initConfig( config );
 			
 			grunt.tasks("uglify", config, function(){
-				console.log("DONE!!!");
+				//console.log("compressed js");
 			});
 		}
 		//var relativeTo = this.data.cdn;
