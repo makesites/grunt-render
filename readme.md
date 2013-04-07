@@ -1,4 +1,3 @@
-
 ## Grunt Render
 
 Grunt tasks initiated on the server side while rendering views
@@ -8,7 +7,7 @@ Grunt tasks initiated on the server side while rendering views
 
 * Automatically generates markup
 * Optionally outputs js as a require.js config object
-* Compares existing (minified) files with modified date and md5 signature
+* Compares existing files with modified date and md5 signature (soon)
 
 
 ## Install
@@ -19,10 +18,11 @@ npm install grunt-render
 
 ## Usage 
 
-
+Grunt render uses the same api as the regular grunt tasks, only it executes them on the server side as needed. 
 ### Javascript 
 
-You can call 
+You can call the methods directly any time: 
+
 ```
 var grunt_render = require('grunt-render')
 
@@ -45,13 +45,15 @@ Alternatively:
 
 ## Options
 
+* main : the location of the initializing script
+
 * cdn : domain of the cdn 
 
-* views 
+* less : options related to the less minification
 
-* public
+* require : options related to require.js
 
-* minify : a boolean if the assets will be minified in production
+* minify : options related with the miinfication process
 
 
 ## Methods
@@ -65,5 +67,10 @@ Alternatively:
 * main() : render the final output
 
 
+## Credits
 
+Created by Makis Tracend ( [@tracend](http://github.com/tracend) )
 
+Distributed through [Makesites.org](http://makesites.org/)
+
+Released under the [MIT license](http://makesites.org/licenses/MIT)
