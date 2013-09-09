@@ -1,13 +1,13 @@
-var fs = require("fs"), 
+var fs = require("fs"),
 	_ = require("underscore");
-	
+
 module.exports = function (grunt) {
-	
+
 	grunt.registerMultiTask('less_render', "Minify less files", function () {
 		var dir = this.data.dir + this.data.dest;
 		var config = {
-			less: { 
-				compile: { 
+			less: {
+				compile: {
 					options: {
 					  paths: [],
 					  compress: true
@@ -16,7 +16,7 @@ module.exports = function (grunt) {
 				}
 			}
 		};
-		
+
 		for(var i in this.data.src){
 			var group = i;
 			var styles = this.data.src[i];
@@ -29,26 +29,25 @@ module.exports = function (grunt) {
 			// create group if needed
 			// add root dir in the paths
 			config.less.compile.options.paths.push( this.data.dir + "/assets/less" );
-			
+
 			var lib = this.data.dir + this.data.dest + group+'.css';
 			// if the file exists - the task has already been done...
 			if( fs.existsSync(lib) ) continue;
-			
+
 			// in all other cases add the task
 			config.less.compile.files[lib] = styles;
-					
+
 		}
-		
-		if( !_.isEmpty( config.less.compile.files ) ){ 
+
+		if( !_.isEmpty( config.less.compile.files ) ){
 			grunt.initConfig( config );
-			
+
 			grunt.tasks("less", config, function(){
 				//console.log("compressed less");
 			});
 		}
-		
-		
+
 	});
-	
-	
+
+
 };
