@@ -3,10 +3,11 @@ var fs = require("fs"),
 
 module.exports = function (grunt) {
 
-	grunt.registerMultiTask('js', "Minify js files", function () {
+	grunt.task.registerMultiTask('js', "Minify js files", function () {
 		var dir = this.data.dir + this.data.dest;
+		//var done = this.async();
 		var config = {
-			  uglify: {}
+			uglify: {}
 		};
 
 		for(var i in this.data.src){
@@ -42,10 +43,12 @@ module.exports = function (grunt) {
 		}
 
 		if( !_.isEmpty( config.uglify ) ){
-			grunt.initConfig( config );
+			// update config
+			grunt.config.set( "uglify", config.uglify );
 
 			grunt.tasks("uglify", config, function(){
 				//console.log("compressed js");
+				//done();
 			});
 		}
 		//var relativeTo = this.data.cdn;
