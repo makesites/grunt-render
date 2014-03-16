@@ -3,14 +3,15 @@ var fs = require("fs"),
 
 module.exports = function (grunt) {
 
-	grunt.registerMultiTask('less_render', "Minify less files", function () {
+	grunt.task.registerMultiTask('lessc', "Minify less files", function () {
 		var dir = this.data.dir + this.data.dest;
+		//var done = this.async();
 		var config = {
 			less: {
 				compile: {
 					options: {
-					  paths: [],
-					  compress: true
+						paths: [],
+						compress: true
 					},
 					files: {}
 				}
@@ -40,10 +41,12 @@ module.exports = function (grunt) {
 		}
 
 		if( !_.isEmpty( config.less.compile.files ) ){
-			grunt.initConfig( config );
+			// update config
+			grunt.config.set( "less", config.less );
 
 			grunt.tasks("less", config, function(){
 				//console.log("compressed less");
+				//done();
 			});
 		}
 
