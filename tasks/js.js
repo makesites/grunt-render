@@ -11,6 +11,7 @@ module.exports = function (grunt) {
 				options: this.data.options || {}
 			}
 		};
+		var compile = false;
 
 		for(var i in this.data.src){
 			var group = i;
@@ -35,7 +36,6 @@ module.exports = function (grunt) {
 				var now = (new Date()).getTime();
 				var modified = fs.statSync(lib).mtime.getTime();
 				// stop now if it's too early
-				console.log("js: now - modified", (now - modified) );
 				if( now - modified < this.data.timeout ){
 					continue;
 				}
@@ -46,10 +46,12 @@ module.exports = function (grunt) {
 				src: scripts,
 				dest: lib
 			};
+			// set flag
+			if( !compile ) compile = true;
 
 		}
 
-		if( !_.isEmpty( config.uglify ) ){
+		if( compile ){
 			// update config
 			grunt.config.set( "uglify", config.uglify );
 
