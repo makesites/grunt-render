@@ -7,7 +7,9 @@ module.exports = function (grunt) {
 		var dir = this.data.dir + this.data.dest;
 		//var done = this.async();
 		var config = {
-			uglify: {}
+			uglify: {
+				options: this.data.options || {}
+			}
 		};
 
 		for(var i in this.data.src){
