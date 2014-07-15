@@ -23,17 +23,22 @@ module.exports = function (grunt) {
 			// exit now if empty array
 			if( !scripts.length ) continue;
 
-			// execute this once or with a delay... (set: options.minify.recurring : 3600)
-			if( this.data.recurring ){
-				// check if there's an existing file
-				var now = (new Date()).getTime()
-				timestamp = ( fs.existsSync(lib) ) ? fs.statSync(lib).mtime.getTime() : false;
-				// stop now if it's too early
-				if( timestamp && now - timestamp < this.data.recurring ) continue;
+			// Conditions:
 
-			} else {
-				// if the file exists - the task has already been done...
-				if( fs.existsSync(lib) ) continue;
+			// - if not recursive check if the file already exists
+			var exists = fs.existsSync(lib);
+			if( !this.data.recurring && exists ){
+				continue;
+			}
+			// - if timeout, check the last modified timestamp
+			if( this.data.timeout && exists ){
+				var now = (new Date()).getTime();
+				var modified = fs.statSync(lib).mtime.getTime();
+				// stop now if it's too early
+				console.log("js: now - modified", (now - modified) );
+				if( now - modified < this.data.timeout ){
+					continue;
+				}
 			}
 
 			// in all other cases add the task
@@ -52,6 +57,7 @@ module.exports = function (grunt) {
 				//console.log("compressed js");
 				//done();
 			});
+
 		}
 		//var relativeTo = this.data.cdn;
 		//var files = grunt.file.expandFiles(this.file.src);

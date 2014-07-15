@@ -32,9 +32,25 @@ module.exports = function (grunt) {
 			config.less.compile.options.paths.push( this.data.dir + "/assets/less" );
 
 			var lib = this.data.dir + this.data.dest + group+'.css';
-			// if the file exists - the task has already been done...
-			if( fs.existsSync(lib) ) continue;
 
+			// Conditions:
+
+			// - if not recursive check if the file already exists
+			var exists = fs.existsSync(lib);
+
+			if( !this.data.recurring && exists ){
+				continue;
+			}
+			// - if timeout, check the last modified timestamp
+			if( this.data.timeout && exists ){
+				var now = (new Date()).getTime();
+				var modified = fs.statSync(lib).mtime.getTime();
+				// stop now if it's too early
+				console.log("less: now - modified", (now - modified) );
+				if( now - modified < this.data.timeout ){
+					continue;
+				}
+			}
 			// in all other cases add the task
 			config.less.compile.files[lib] = styles;
 
@@ -48,8 +64,8 @@ module.exports = function (grunt) {
 				//console.log("compressed less");
 				//done();
 			});
-		}
 
+		}
 	});
 
 
