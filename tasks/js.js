@@ -26,25 +26,31 @@ module.exports = function (grunt) {
 			if( !scripts.length ) continue;
 
 			// Conditions:
+			var now = (new Date()).getTime();
+			var exists = fs.existsSync(lib);
 
 			// - if not recursive check if the file already exists
-			var exists = fs.existsSync(lib);
 			if( !this.data.recurring && exists ){
 				continue;
 			}
 			// - if timeout, check the last modified timestamp
 			if( this.data.timeout && exists ){
-				var now = (new Date()).getTime();
-				var modified = fs.statSync(lib).mtime.getTime();
+				var modified = parseInt( fs.statSync(lib).mtime.getTime().toString().substring(0, 13) );
 				// stop now if it's too early
 				if( now - modified < this.data.timeout ){
 					continue;
 				}
 			}
 			// - proceed only if there's a newer file
-			var updates  = u.hasUpdates(lib, scripts);
-			if( !updates ) continue;
-
+			if( exists ){
+				var updates  = u.hasUpdates(lib, scripts);
+				if( !updates ){
+					// modifying date of lib so it's not touched again until timeout...
+					var timestamp = now / 1000;
+					fs.utimesSync(lib, timestamp, timestamp);
+					continue;
+				}
+			}
 			// in all other cases add the task
 			config.uglify[group] = {
 				src: scripts,
