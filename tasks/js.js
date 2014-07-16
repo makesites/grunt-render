@@ -1,4 +1,5 @@
 var fs = require("fs"),
+	u = require("../lib/util"),
 	_ = require("underscore");
 
 module.exports = function (grunt) {
@@ -40,6 +41,9 @@ module.exports = function (grunt) {
 					continue;
 				}
 			}
+			// - proceed only if there's a newer file
+			var updates  = u.hasUpdates(lib, scripts);
+			if( !updates ) continue;
 
 			// in all other cases add the task
 			config.uglify[group] = {

@@ -1,4 +1,5 @@
 var fs = require("fs"),
+	u = require("../lib/util"),
 	_ = require("underscore");
 
 module.exports = function (grunt) {
@@ -46,11 +47,15 @@ module.exports = function (grunt) {
 				var now = (new Date()).getTime();
 				var modified = fs.statSync(lib).mtime.getTime();
 				// stop now if it's too early
-				console.log("less: now - modified", (now - modified) );
 				if( now - modified < this.data.timeout ){
 					continue;
 				}
 			}
+			// - proceed only if there's a newer file
+			var files = getLessFiles( styles );
+			var updates  = u.hasUpdates(lib, files);
+			if( !updates ) continue;
+
 			// in all other cases add the task
 			config.less.compile.files[lib] = styles;
 
@@ -70,3 +75,20 @@ module.exports = function (grunt) {
 
 
 };
+
+
+// Helpers
+
+getLessFiles = function( files ){
+	var result = [];
+	for( var i in files ){
+		var file = files[i];
+		var path = file.substring(0,file.lastIndexOf("/")+1);
+		var contents = fs.readdirSync( path ); // get all files in the dir..
+		// add the path to the contents
+		for( var j in contents ){
+			result.push( path + contents[j] );
+		}
+	}
+	return result;
+}
