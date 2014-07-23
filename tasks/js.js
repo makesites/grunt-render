@@ -19,6 +19,8 @@ module.exports = function (grunt) {
 			var scripts = this.data.src[i].files;
 			// add root dir in the paths
 			for(i in scripts){
+				// skip files that are not on the server
+				if( !u.isLocal( scripts[i] ) ) continue;
 				scripts[i] = this.data.dir + scripts[i];
 			}
 			var lib = dir + group+'.min.js';
