@@ -9,9 +9,10 @@ The build process is dead, long live the build.
 
 ## Features
 
+* Supports: JS, CSS, LESS
 * Automatically generates markup
 * Optionally outputs js as a require.js config object
-* Compares existing files with modified date and md5 signature (soon)
+* Compares existing files with modified date and md5 signature
 
 
 ## Install
@@ -45,6 +46,38 @@ Alternatively:
 {{#grunt "js" "helpers"}}
 /assets/js/helpers/underscore.js
 /assets/js/helpers/handlebars.js
+{{/grunt}}
+```
+
+### CSS
+
+In line with JavaScripts, stylesheets can be minified programatically:
+
+```
+grunt_render.css({
+	name : "styles",
+	files : ["/assets/css/stylesheet1.css", "/assets/css/stylesheet2.css"]
+});
+```
+
+or in a view using a (Handlebars) helper
+
+```
+{{#grunt "css" "styles"}}
+/assets/css/stylesheet1.css
+/assets/css/stylesheet2.css
+{{/grunt}}
+```
+
+### LESS
+
+With LESS stylesheets, the JavaScript lib is automaically added when the assets are unminified.
+
+Using the aforementioned Handlebars helper, the LESS styles are initiated like this:
+
+```
+{{#grunt "less" "main"}}
+/assets/css/main.less
 {{/grunt}}
 ```
 
