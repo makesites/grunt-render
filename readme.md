@@ -1,6 +1,10 @@
 ## Grunt Render
 
-Grunt tasks initiated on the server side while rendering views
+This library was created with the belief that a server is smarter than just delivering static assets and thus can deal with the necessary build process for compiling and delivering a production-ready web application.
+
+From a workflow perspective, this method alleviates from duplication in the codebase repository and relieves developers from running extraneous building processes on their local machines.
+
+The build process is dead, long live the build.
 
 
 ## Features
@@ -16,30 +20,32 @@ Grunt tasks initiated on the server side while rendering views
 npm install grunt-render
 ```
 
-## Usage 
 
-Grunt render uses the same api as the regular grunt tasks, only it executes them on the server side as needed. 
-### Javascript 
+## Usage
 
-You can call the methods directly any time: 
+Grunt render uses the same api as the regular grunt tasks, only it executes them on the server side as needed.
+
+### Javascript
+
+You can call the methods directly any time:
 
 ```
 var grunt_render = require('grunt-render')
 
-grunt_render.js({ 
-	name : "helpers", 
+grunt_render.js({
+	name : "helpers",
 	files : ["/assets/js/helpers/underscore.js", "/assets/js/helpers/handlebars.js"]
 });
 ```
 
-Alternatively: 
+Alternatively:
 
 * Using handlebars:  https://gist.github.com/tracend/5330007
 ```
-{{#grunt "js" "helpers"}} 
+{{#grunt "js" "helpers"}}
 /assets/js/helpers/underscore.js
 /assets/js/helpers/handlebars.js
-{{/grunt}} 
+{{/grunt}}
 ```
 
 
@@ -47,7 +53,7 @@ Alternatively:
 
 * main : the location of the initializing script
 
-* cdn : domain of the cdn 
+* cdn : domain of the cdn
 
 * less : options related to the less minification
 
@@ -69,7 +75,7 @@ Alternatively:
 
 ## Credits
 
-Created by Makis Tracend ( [@tracend](http://github.com/tracend) )
+Initiated by Makis Tracend ( [@tracend](http://github.com/tracend) )
 
 Distributed through [Makesites.org](http://makesites.org/)
 
