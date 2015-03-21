@@ -12,6 +12,15 @@ module.exports = function (grunt) {
 	});
 	*/
 
+	// always disable regular output?
+	grunt.log.header = function(){};
+	var writeln = grunt.log.writeln();
+	grunt.log.writeln = function(){
+		// override success method...
+		writeln.success = function(){ };
+		return writeln;
+	}
+
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-less');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
