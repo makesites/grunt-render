@@ -11,11 +11,12 @@ module.exports = function (grunt) {
 			cssmin: {
 				options: this.data.options || {},
 
-				combine: {
-					files: {}
+				target: {
+					files: []
 				}
 			}
 		};
+
 		var compile = false;
 
 		for(var i in this.data.src){
@@ -67,13 +68,13 @@ module.exports = function (grunt) {
 			// can we combine without minifying?
 			//config.cssmin.combine.files[lib]= styles;
 
-			config.cssmin.minify = {
+			config.cssmin.target.files.push({
 				//expand: true,
 				//cwd: 'release/css/',
 				src: styles,
 				dest: lib,
 				//ext: '.min.css'
-			}
+			});
 			// set flag
 			if( !compile ) compile = true;
 		}
