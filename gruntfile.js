@@ -21,6 +21,8 @@ module.exports = function (grunt) {
 		return writeln;
 	}
 
+        // load core tasks
+	grunt.file.setBase( grunt.config.data.base );
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-less');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
